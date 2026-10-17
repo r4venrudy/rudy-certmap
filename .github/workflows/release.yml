@@ -1,0 +1,35 @@
+name: Release verified binaries
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  validate:
+    uses: ./.github/workflows/ci.yml
+  release:
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+          cache: false
+      - name: Check release version
+        shell: bash
+        run: |
+          actual="$(go run ./cmd/certmap --version)"
+          test "${actual#certmap }" = "${GITHUB_REF_NAME#v}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/package.py
+      - name: Publish checked artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/* --title "Rudy CertMap $GITHUB_REF_NAME" --notes-file docs/RELEASE.md --prerelease

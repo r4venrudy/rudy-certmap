@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+<title id="title">RUDY / CERTMAP</title><desc id="desc">Map the chain. Review the rotation. Offline certificate trust review in Go.</desc>
+<rect width="1280" height="360" rx="18" fill="#0a1118"/>
+<path d="M0 0h7v360H0" fill="#55e0b6"/>
+<path d="M64 257H1216" stroke="#24333d"/>
+<g fill="none" stroke="#142333"><path d="M900 0V238M960 0V238M1020 0V238M1080 0V238M1140 0V238M1200 0V238M880 44H1280M880 104H1280M880 164H1280M880 224H1280"/></g>
+<text x="64" y="48" fill="#55e0b6" font-family="Consolas,monospace" font-size="14" letter-spacing="4">RUDY SYSTEMS / INFRASTRUCTURE SECURITY</text>
+<text x="60" y="150" fill="#edf4f7" font-family="Arial,Helvetica,sans-serif" font-size="63" font-weight="700">RUDY <tspan fill="#55e0b6">/ CERTMAP</tspan></text>
+<text x="64" y="206" fill="#b7c6ce" font-family="Arial,Helvetica,sans-serif" font-size="25">Map the chain. Review the rotation.</text>
+<g fill="none" stroke="#55e0b6" stroke-width="2"><path d="M987 88h71m-71 88h71M974 112v40"/><rect x="950" y="64" width="47" height="48" rx="5"/><rect x="950" y="152" width="47" height="48" rx="5"/><rect x="1058" y="64" width="47" height="48" rx="5"/><rect x="1058" y="152" width="47" height="48" rx="5"/><path d="m1070 89 8 8 15-17m-23 96 8 8 15-17"/></g>
+<text x="64" y="301" fill="#55e0b6" font-family="Consolas,monospace" font-size="15" letter-spacing="2">GO / X.509 / EXPLICIT TRUST / CERTIFICATE ROTATIONS</text>
+<text x="1216" y="301" text-anchor="end" fill="#b7c6ce" font-family="Consolas,monospace" font-size="12" letter-spacing="1">v0.1.0 / DEVELOPER PREVIEW</text>
+</svg>

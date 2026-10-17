@@ -1,0 +1,38 @@
+name: Verify CertMap
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        go: ['1.26.x', '1.27.x']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+          cache: false
+      - run: go vet ./...
+      - run: go test ./... -cover
+      - name: Race detector
+        if: runner.os == 'Linux'
+        run: go test -race ./...
+      - name: Fuzz parser
+        if: runner.os == 'Linux' && matrix.go == '1.27.x'
+        run: go test ./certmap -run '^$' -fuzz '^FuzzParse$' -fuzztime 10s -parallel 2
+      - name: Build standalone executable
+        run: go build -trimpath -o certmap-ci.exe ./cmd/certmap
+      - name: Offline example smoke
+        shell: bash
+        run: |
+          ./certmap-ci.exe inspect --roots examples/roots.pem --dns-name service.example.test --at 2026-10-17T12:00:00Z examples/bundle.pem
+          ./certmap-ci.exe diff examples/bundle.pem examples/rotated.pem
+          ./certmap-ci.exe --version
