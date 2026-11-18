@@ -107,3 +107,12 @@ class ZipFramingTests(unittest.TestCase):
                 struct.pack_into("<H", bad, offset, version - 1)
                 with self.assertRaisesRegex(ValueError, "ZIP extraction version"):
                     self.verify(bad)
+
+    def test_accepts_version_10_for_stored_directories(self):
+        buffer = BytesIO()
+        directory = zipfile.ZipInfo("data/")
+        directory.extract_version = 10
+        with zipfile.ZipFile(buffer, "w") as package:
+            package.writestr(directory, b"")
+            package.writestr("data/item", b"sample")
+        self.assertEqual(self.verify(buffer.getvalue()), (2, 6))

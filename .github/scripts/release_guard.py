@@ -137,7 +137,7 @@ def validate_zip_metadata(archive, member):
         version, _, flags, method = struct.unpack_from("<BBHH", header, 4)
         if flags != member.flag_bits or method != member.compress_type:
             raise ValueError("ZIP local metadata disagrees with central record")
-        minimum = 20 if method == zipfile.ZIP_DEFLATED or member.is_dir() else 10
+        minimum = 20 if method == zipfile.ZIP_DEFLATED else 10
         if min(version, member.extract_version) < minimum:
             raise ValueError("ZIP extraction version is below the member's feature minimum")
         name_size, extra_size = struct.unpack_from("<HH", header, 26)
